@@ -1,5 +1,0 @@
-﻿  main.cpp
-D:\Workspace\Visual Studio\KinectMusicInstrument\KinectMusicInstrument\main.cpp(33): warning C4800: 'INuiSensor *': Variable wird auf booleschen Wert ('True' oder 'False') gesetzt (Auswirkungen auf Leistungsverhalten möglich)
-  Code wird generiert.
-  Codegenerierung ist abgeschlossen.
-  VS-Project.vcxproj -> C:\Users\Leo\Documents\GitHub\kinect-pd-instrument\VS-Project\Release\VS-Project.exe
