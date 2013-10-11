@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\oscpkt">
+      <UniqueIdentifier>{319e07e8-3ea6-49f0-85fa-74602ecac12d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\oscpkt">
+      <UniqueIdentifier>{c646e382-479c-49e9-978e-cf62eef48cfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -25,6 +31,14 @@
   <ItemGroup>
     <ClInclude Include="DepthInformation.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="oscpkt\oscpkt.hh">
+      <Filter>Headerdateien\oscpkt</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpkt\udp.hh">
+      <Filter>Headerdateien\oscpkt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

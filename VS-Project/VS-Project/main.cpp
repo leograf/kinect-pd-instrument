@@ -1,5 +1,11 @@
 #include <assert.h>
 
+#define OSCPKT_OSTREAM_OUTPUT
+#include "oscpkt/oscpkt.hh"
+#include "oscpkt/udp.hh"
+
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
 
 #include <Ole2.h>
@@ -10,6 +16,8 @@
 
 #include "DepthInformation.h"
 
+#define ADDRESS "127.0.0.1"
+#define PORT 7000
 
 const int width = 640;
 const int height = 480;
@@ -128,6 +136,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(width, height), "DT2300");
 	sf::Texture texture;
 	sf::Sprite sprite;
+
 	sf::Image image;
 	image.create(width, height, sf::Color::Black);
 
@@ -138,6 +147,15 @@ int main()
 	sf::Clock clock;
 	clock.restart();
 	float deltaTime = 0.f;
+
+	// OSC
+	oscpkt::UdpSocket sock;
+	sock.connectTo(ADDRESS, PORT);
+	if (!sock.isOk()) {
+		std::cerr << "Error connection to port " << PORT << ": " << sock.errorMessage() << "\n";
+		return -1;
+	}
+	//
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -152,6 +170,17 @@ int main()
 		depthInf.update(deltaTime, depthImage);
 
 		drawImage(depthInf.getVelocityInformation(), &image);
+
+		//Send PD
+		if (sock.isOk()) {
+			oscpkt::Message msg("/pixeltest"); msg.pushFloat((float)image.getPixel(0, 0).r);
+			oscpkt::PacketWriter pw;
+			pw.startBundle().startBundle().addMessage(msg).endBundle().endBundle();
+			if (!sock.sendPacket(pw.packetData(), pw.packetSize())) {
+				std::cout << "Could not sent packet" << std::endl;
+			}
+		}
+		//
 
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);
