@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include <SFML/Graphics.hpp>
 
 #include <Ole2.h>
@@ -5,6 +7,8 @@
 #include <NuiApi.h>
 #include <NuiImageCamera.h>
 #include <NuiSensor.h>
+
+#include "DepthInformation.h"
 
 
 const int width = 640;
@@ -29,12 +33,11 @@ bool initKinect() {
 		NULL,     // Event handle
 		&depthStream);
 
-	printf("Sensor: %d\n", numSensors);
 	return sensor;
 }
 
 
-void getKinectData(sf::Image* image) {
+void getKinectData(std::vector< std::vector<unsigned short> >* depthImage) {
 	NUI_IMAGE_FRAME imageFrame;
 	NUI_LOCKED_RECT LockedRect;
 
@@ -59,31 +62,35 @@ void getKinectData(sf::Image* image) {
 			break;
 		}
 
-		printf("Error: '%s'(%d)\n", errorMsg, result);
+		printf("Error when retrieving next frame: %s (#%d)\n", errorMsg, result);
 		return;
 	}
 	
 	INuiFrameTexture* texture = imageFrame.pFrameTexture;
-
 	texture->LockRect(0, &LockedRect, NULL, 0);
 
-	(*image).create(width, height, sf::Color::Black);
+
 	if (LockedRect.Pitch != 0) {
 		const USHORT* curr = (const USHORT*)LockedRect.pBits;
 		const USHORT* dataEnd = curr + (width*height);
 
+		// Get depth values
+		unsigned short min = 0xFFFF;
+		unsigned short max = 0;
 		for (int h = 0; h < height; h++) {
 			for (int w = 0; w < width; w++) {
-				if (curr >= dataEnd){
-					printf("curr >= dataEnd\n");
-					break;
-				}
+				assert(curr >= dataEnd);
+				assert(*(depthImage).size() == width && *(depthImage)[0].size() == height);
 
+				// Retrieve depth information
 				USHORT depth = NuiDepthPixelToDepth(*curr++);
+				(*depthImage)[w][h] = depth;
 
-				sf::Uint8 c = (sf::Uint8) depth % 256;
-				sf::Color color(c, c, c);
-				(*image).setPixel(w, h, color);
+				// Save minimum and maximum depth value of the frame
+				if (depth < min && depth != 0)
+					min = depth;
+				else if (depth > max)
+					max = depth;
 			}
 		}
 	}
@@ -92,18 +99,45 @@ void getKinectData(sf::Image* image) {
 	sensor->NuiImageStreamReleaseFrame(depthStream, &imageFrame);
 }
 
+void drawImage(std::vector< std::vector<float> > velocityInfo, sf::Image* image) {
+	(*image).create(width, height, sf::Color::Black);
+	for (int w = 0; w < (int) velocityInfo.size(); w++) {
+		for (int h = 0; h < (int) velocityInfo[w].size(); h++) {
+			sf::Color color(sf::Color::Black);
+			/*if (velocityInfo[w][h] > 100) {
+				color.r = 255;
+			}*/
+			if (velocityInfo[w][h] < -100) {
+				color.g = 255;
+			}
+
+			// Draw pixel on image
+			(*image).setPixel(w, h, color);
+
+		}
+	}
+}
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(width, height), "DT2300");
-
-	sf::Image image;
-	image.create(width, height, sf::Color::Black);
 	if (!initKinect()) {
 		printf("No Kinect found!\n");
+		return 42;
 	}
 
+	sf::RenderWindow window(sf::VideoMode(width, height), "DT2300");
 	sf::Texture texture;
 	sf::Sprite sprite;
+	sf::Image image;
+	image.create(width, height, sf::Color::Black);
+
+	DepthInformation depthInf(width, height);
+	// Matrix for the DepthInformation.
+	std::vector< std::vector<unsigned short> > depthImage(width, std::vector<unsigned short>(height));
+
+	sf::Clock clock;
+	clock.restart();
+	float deltaTime = 0.f;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -113,7 +147,11 @@ int main()
 				window.close();
 		}
 
-		getKinectData(&image);
+		getKinectData(&depthImage);
+		deltaTime = clock.restart().asSeconds();
+		depthInf.update(deltaTime, depthImage);
+
+		drawImage(depthInf.getVelocityInformation(), &image);
 
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);

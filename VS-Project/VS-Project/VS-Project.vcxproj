@@ -11,7 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DepthInformation.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DepthInformation.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5375FBBF-C71D-42DC-AB8F-4E965B12A84B}</ProjectGuid>
