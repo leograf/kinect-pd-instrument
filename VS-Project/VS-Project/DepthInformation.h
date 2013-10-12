@@ -1,5 +1,7 @@
 #include <vector>
 
+#define VELOCITY_THRESHOLD 700.f
+
 struct DepthPoint
 {
 	unsigned short depth;
@@ -22,12 +24,9 @@ public:
 	std::vector< std::vector<float> > getVelocityInformation();
 
 private:
-	static const int BUFFER_SIZE;
-
 	int width, height;
 
-	unsigned int bufferPos;
-	std::vector< std::vector< std::vector<DepthPoint> > > depthBuffer;
+	std::vector< std::vector<DepthPoint> > depthBuffer;
 	std::vector< std::vector<float> > velocityFrame;
 };
 

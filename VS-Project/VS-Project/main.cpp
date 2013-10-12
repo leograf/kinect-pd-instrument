@@ -115,8 +115,8 @@ void drawImage(std::vector< std::vector<float> > velocityInfo, sf::Image* image)
 			/*if (velocityInfo[w][h] > 100) {
 				color.r = 255;
 			}*/
-			if (velocityInfo[w][h] < -100) {
-				color.g = 255;
+			if (velocityInfo[w][h] < -50.0f) {
+				color.g = (int)(255.0f*((velocityInfo[w][h] + 50.0f)/-VELOCITY_THRESHOLD));
 			}
 
 			// Draw pixel on image
