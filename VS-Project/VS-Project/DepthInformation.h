@@ -1,6 +1,7 @@
-#include <vector>
+#ifndef DEPTH_INFORMATION_H
+#define DEPTH_INFORMATION_H
 
-#define VELOCITY_THRESHOLD 700.f
+#include "tools.h"
 
 struct DepthPoint
 {
@@ -29,4 +30,6 @@ private:
 	std::vector< std::vector<DepthPoint> > depthBuffer;
 	std::vector< std::vector<float> > velocityFrame;
 };
+
+#endif //DEPTH_INFORMATION_H
 
