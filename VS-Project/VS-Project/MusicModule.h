@@ -1,8 +1,11 @@
 #ifndef MUSIC_MODLE_H
 #define MUSIC_MODLE_H
 
-#include <vector>
-#include "PdComunication.h"
+#define MOVEMENT_MIN_THRESHOLD 30.f
+#define MOVEMENT_MAX_THRESHOLD 100.f
+
+
+#include "tools.h"
 
 struct NoteInformation
 {
@@ -24,10 +27,6 @@ public:
 	std::vector<NoteInformation> getNoteInformations();
 
 private:
-	void send();
-
-	static const float velocityThreshold;
-
 	int notes;
 	std::vector<NoteInformation> noteInformations;
 };

@@ -8,6 +8,9 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <Ole2.h>
+#include <algorithm>
+#include <sstream>
+#include <string>
 
 
 #define ADDRESS "127.0.0.1"

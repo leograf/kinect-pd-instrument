@@ -19,19 +19,17 @@ void DrawingModule::drawImage(std::vector< std::vector<float> > velocityInfo, sf
 }
 
 void DrawingModule::drawCenters(std::vector<NoteInformation> noteInformations, sf::RenderWindow& window) {
-	int width = window.getSize().y;
-	int noteHeight = width / (int)noteInformations.size();
+	int noteHeight = height / (int)noteInformations.size();
 
 	sf::CircleShape shape(5);
 	shape.setFillColor(sf::Color::Blue);
 
 	for (int i = 0; i < (int)noteInformations.size(); i++) {
-		int x = (int) (((float) noteInformations[i].center + 1.f) / 2.f * (float) width);
-		int y = noteHeight * i + (int) (noteHeight / 2);
+		int x = (int) (((float) noteInformations[i].center + 1.f) / 2.f * (float) width);		
+		int y = noteHeight * i + (noteHeight / 2);
 		shape.setPosition(x, y);
 
-		printf("Note %d: %.2f\n", i + 1, noteInformations[i].quantity);
-		if (noteInformations[i].quantity <= -40)
+		if (noteInformations[i].quantity >= 0.0000001)
 			shape.setFillColor(sf::Color::Red);
 		else
 			shape.setFillColor(sf::Color::Blue);

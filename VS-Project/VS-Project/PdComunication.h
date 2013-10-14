@@ -6,12 +6,13 @@
 #include "oscpkt/udp.hh"
 
 #include "tools.h"
+#include "MusicModule.h"
 
 class PdComunication {
 public:
 	PdComunication();
 
-	void send(std::vector< std::vector<unsigned short> > depthImage);
+	void send(std::vector<NoteInformation> noteInformations);
 private:
 	oscpkt::UdpSocket sock;
 };

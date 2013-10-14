@@ -7,13 +7,24 @@ PdComunication::PdComunication() {
 	}
 }
 
-void PdComunication::send(std::vector< std::vector<unsigned short> > depthImage) {
+void PdComunication::send(std::vector<NoteInformation> noteInformations) {
 	if (sock.isOk()) {
-		oscpkt::Message msg("/pixeltest"); msg.pushFloat(42.42f);
-		oscpkt::PacketWriter pw;
-		pw.startBundle().addMessage(msg).endBundle();
-		if (!sock.sendPacket(pw.packetData(), pw.packetSize())) {
-			std::cout << "Could not sent packet" << std::endl;
+
+		for (int n = 0; n < (int) noteInformations.size(); n++) {
+			std::stringstream ss;
+			ss << "/note" << n;
+
+			oscpkt::Message msg(ss.str());
+			msg.pushFloat(noteInformations[n].quantity);
+			printf("quantity: %.10f\n", noteInformations[n].quantity);
+			msg.pushFloat(noteInformations[n].center);
+
+			oscpkt::PacketWriter pw;
+			pw.startBundle().addMessage(msg).endBundle();
+
+			if (!sock.sendPacket(pw.packetData(), pw.packetSize())) {
+				std::cout << "Could not sent packet" << std::endl;
+			}
 		}
 	}
 }

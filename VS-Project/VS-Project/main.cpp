@@ -48,7 +48,7 @@ int main()
 
 		drawing.drawImage(depthInf.getVelocityInformation(), image);
 
-		pd.send(depthImage);
+		pd.send(musicModule.getNoteInformations());
 
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);
