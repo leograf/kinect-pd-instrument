@@ -17,7 +17,7 @@ int main()
 
 	KinectManager kinect;
 	DepthInformation depthInf(width, height);
-	MusicModule mm(10);
+	MusicModule musicModule(10);
 
 	// Matrix for the DepthInformation.
 	std::vector< std::vector<unsigned short> > depthImage(width, std::vector<unsigned short>(height));
@@ -31,6 +31,7 @@ int main()
 
 	while (window.isOpen())
 	{
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -43,9 +44,9 @@ int main()
 		kinect.getKinectData(&depthImage);
 		deltaTime = clock.restart().asSeconds();
 		depthInf.update(deltaTime, depthImage);
-		mm.update(deltaTime, depthInf.getVelocityInformation());
+		musicModule.update(deltaTime, depthInf.getVelocityInformation());
 
-		drawing.drawImage(depthInf.getVelocityInformation(), &image);
+		drawing.drawImage(depthInf.getVelocityInformation(), image);
 
 		pd.send(depthImage);
 
@@ -54,6 +55,7 @@ int main()
 
 		window.clear();
 		window.draw(sprite);
+		drawing.drawCenters(musicModule.getNoteInformations(), window);
 		window.display();
 	}
 

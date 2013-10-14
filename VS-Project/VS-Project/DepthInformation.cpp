@@ -39,9 +39,7 @@ void DepthInformation::update(float deltaTime, const std::vector< std::vector<un
 			depthBuffer[w][h].velocity = depthBuffer[w][h].velocity*(1.f - fa) + vel*fa;
 			depthBuffer[w][h].acceleration = depthBuffer[w][h].acceleration*(1.f - fa) + acc*fa;
 
-			// Calculate average velocity and acceleration
-
-			velocityFrame[w][h] = depthBuffer[w][h].velocity; // +0.5f*depthBuffer[w][h].acceleration*deltaTime;
+			velocityFrame[w][h] = (depthBuffer[w][h].velocity > 0) ? 0 : depthBuffer[w][h].velocity; // +0.5f*depthBuffer[w][h].acceleration*deltaTime;
 		}
 	}
 }

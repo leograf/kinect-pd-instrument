@@ -6,11 +6,11 @@
 
 struct NoteInformation
 {
-	float movementValue;
+	float quantity;
 	float center;
 
 	NoteInformation()
-		: movementValue(0.f), center(0.f)
+		: quantity(0.f), center(0.f)
 	{};
 };
 
@@ -21,6 +21,7 @@ public:
 	~MusicModule();
 
 	void update(float deltaTime, const std::vector< std::vector<float> >& velocityInformation);
+	std::vector<NoteInformation> getNoteInformations();
 
 private:
 	void send();
