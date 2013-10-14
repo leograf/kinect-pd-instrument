@@ -11,7 +11,7 @@ class PdComunication {
 public:
 	PdComunication();
 
-	void send();
+	void send(std::vector< std::vector<unsigned short> > depthImage);
 private:
 	oscpkt::UdpSocket sock;
 };

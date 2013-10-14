@@ -27,8 +27,9 @@ void DepthInformation::update(float deltaTime, const std::vector< std::vector<un
 
 			// Calculate veclocity and acceleration
 			depthDiff = (float) (depth - depthBuffer[w][h].depth);
-			if (depthDiff <= -VELOCITY_THRESHOLD)
+			if (depthDiff <= -VELOCITY_THRESHOLD) {
 				depthDiff = 0;
+			}
 			vel = depthDiff / deltaTime;
 			acc = (vel - depthBuffer[w][h].velocity) / deltaTime;
 

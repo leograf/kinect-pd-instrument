@@ -15,12 +15,14 @@
     <ClCompile Include="DrawingModule.cpp" />
     <ClCompile Include="KinectManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MusicModule.cpp" />
     <ClCompile Include="PdComunication.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepthInformation.h" />
     <ClInclude Include="DrawingModule.h" />
     <ClInclude Include="KinectManager.h" />
+    <ClInclude Include="MusicModule.h" />
     <ClInclude Include="oscpkt\oscpkt.hh" />
     <ClInclude Include="oscpkt\udp.hh" />
     <ClInclude Include="PdComunication.h" />

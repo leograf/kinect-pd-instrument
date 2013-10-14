@@ -4,6 +4,7 @@
 #include "KinectManager.h"
 #include "DepthInformation.h"
 #include "DrawingModule.h"
+#include "MusicModule.h"
 
 int main()
 {
@@ -16,8 +17,10 @@ int main()
 
 	KinectManager kinect;
 	DepthInformation depthInf(width, height);
-		// Matrix for the DepthInformation.
-		std::vector< std::vector<unsigned short> > depthImage(width, std::vector<unsigned short>(height));
+	MusicModule mm(10);
+
+	// Matrix for the DepthInformation.
+	std::vector< std::vector<unsigned short> > depthImage(width, std::vector<unsigned short>(height));
 
 	DrawingModule drawing;
 	PdComunication pd;
@@ -40,10 +43,11 @@ int main()
 		kinect.getKinectData(&depthImage);
 		deltaTime = clock.restart().asSeconds();
 		depthInf.update(deltaTime, depthImage);
+		mm.update(deltaTime, depthInf.getVelocityInformation());
 
 		drawing.drawImage(depthInf.getVelocityInformation(), &image);
 
-		pd.send();
+		pd.send(depthImage);
 
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);
