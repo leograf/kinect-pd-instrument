@@ -1,6 +1,6 @@
 #N canvas 960 0 944 1012 10;
 #X declare -lib mrpeach;
-#X obj 239 74 dac~;
+#X obj 403 191 dac~;
 #X obj 20 269 note~;
 #X obj -58 -24 import mrpeach;
 #X obj -58 6 udpreceive 7000;
@@ -11,9 +11,9 @@
 #X obj -58 65 s oscPack;
 #X obj -5 164 r oscPack;
 #X obj 222 -36 r~ note0;
-#X obj 411 51 limiter~;
-#X obj 354 52 z~ 64;
-#X obj 399 95 *~;
+#X obj 338 72 limiter~;
+#X obj 281 73 z~ 64;
+#X obj 326 116 *~;
 #N canvas 274 149 610 317 add 0;
 #X obj 120 24 inlet~;
 #X obj 162 24 inlet~;
@@ -66,7 +66,7 @@
 #X obj 616 -37 r~ note7;
 #X obj 671 -37 r~ note8;
 #X obj 726 -38 r~ note9;
-#X text 509 74 Output Sound;
+#X text 265 16 Output Sound;
 #X text 16 42 Retrieve info from kinect;
 #X obj 160 222 unpack f f;
 #X obj 122 165 r oscPack;
@@ -137,6 +137,12 @@
 #X msg -12 390 523.25;
 #X msg 239 391 329.63;
 #X msg 115 391 392;
+#X obj 484 149 *~;
+#X obj 514 27 env~;
+#X obj 514 49 dbtorms;
+#X obj 514 93 -;
+#X obj 514 115 lop~ 20;
+#X msg 514 71 1 \$1;
 #X connect 1 0 7 0;
 #X connect 3 0 4 0;
 #X connect 4 0 8 0;
@@ -149,8 +155,8 @@
 #X connect 12 0 13 0;
 #X connect 14 0 12 0;
 #X connect 14 0 11 0;
-#X connect 14 0 0 0;
-#X connect 14 0 0 1;
+#X connect 14 0 95 0;
+#X connect 14 0 94 0;
 #X connect 15 0 14 1;
 #X connect 16 0 14 2;
 #X connect 17 0 14 3;
@@ -236,3 +242,10 @@
 #X connect 91 0 68 0;
 #X connect 92 0 70 0;
 #X connect 93 0 69 0;
+#X connect 94 0 0 0;
+#X connect 94 0 0 1;
+#X connect 95 0 96 0;
+#X connect 96 0 99 0;
+#X connect 97 0 98 0;
+#X connect 98 0 94 1;
+#X connect 99 0 97 0;
