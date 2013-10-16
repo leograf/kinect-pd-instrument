@@ -1,4 +1,4 @@
-#N canvas 960 0 944 1012 10;
+#N canvas 1 1 1348 667 10;
 #X declare -lib mrpeach;
 #X obj 411 258 dac~;
 #X obj 21 447 note~;
@@ -129,8 +129,8 @@
 #X connect 10 0 18 0;
 #X connect 11 0 19 0;
 #X connect 12 0 20 0;
-#X restore -112 166 pd CmajArp;
-#X obj -112 134 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X restore 892 144 pd CmajArp;
+#X obj 892 112 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 111 399 r f1;
 #X floatatom 2 935 5 0 0 0 - - -;
@@ -142,9 +142,9 @@
 #X obj -12 738 r f6;
 #X obj 115 740 r f7;
 #X obj 239 739 r f8;
-#X obj -112 201 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 960 112 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#N canvas 1179 134 482 489 Cmaj 0;
+#N canvas 823 219 482 489 Cmaj 0;
 #X obj 76 94 s f0;
 #X obj 76 149 s f1;
 #X obj 10 18 inlet;
@@ -186,8 +186,8 @@
 #X connect 18 0 3 0;
 #X connect 19 0 1 0;
 #X connect 20 0 0 0;
-#X restore -112 233 pd Cmaj;
-#X obj -36 134 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X restore 960 144 pd Cmaj;
+#X obj 823 112 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #N canvas 1149 275 482 489 CminArp 0;
 #X msg 76 67 1046.5;
@@ -231,9 +231,9 @@
 #X connect 18 0 16 0;
 #X connect 19 0 13 0;
 #X connect 20 0 10 0;
-#X restore -36 166 pd CminArp;
-#X obj 85 132 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
+#X restore 823 144 pd CminArp;
+#X obj 1010 112 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
 #N canvas 1149 275 482 489 C3rds 0;
 #X obj 76 94 s f0;
 #X obj 76 149 s f1;
@@ -276,7 +276,7 @@
 #X connect 18 0 5 0;
 #X connect 19 0 1 0;
 #X connect 20 0 0 0;
-#X restore 85 164 pd C3rds;
+#X restore 1010 144 pd C3rds;
 #N canvas 274 149 610 317 sum 0;
 #X obj 35 24 inlet;
 #X obj 53 58 +;
@@ -382,7 +382,56 @@
 #X connect 19 0 8 1;
 #X connect 20 0 8 0;
 #X restore 386 81 pd add;
-#X obj -7 106 loadbang;
+#X obj 974 -16 r oscPack;
+#X obj 974 10 routeOSC /status;
+#X obj 974 38 unpack i;
+#X floatatom 1094 69 5 0 0 0 - - -;
+#X obj 974 67 route 0 1 2 3 4;
+#X obj 1067 112 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#N canvas 807 136 532 395 CJazz 1;
+#X obj 86 104 s f0;
+#X obj 86 159 s f1;
+#X obj 20 28 inlet;
+#X obj 86 214 s f2;
+#X obj 85 266 s f3;
+#X obj 84 317 s f4;
+#X obj 146 105 s f5;
+#X obj 146 160 s f6;
+#X obj 146 215 s f7;
+#X obj 145 267 s f8;
+#X obj 144 318 s f9;
+#X msg 144 291 261.63;
+#X msg 145 240 293.66;
+#X msg 146 133 349.23;
+#X msg 146 188 311.13;
+#X msg 146 78 369.99;
+#X msg 84 290 415.3;
+#X msg 85 239 440;
+#X msg 86 187 493.88;
+#X msg 86 132 523.25;
+#X msg 86 77 587.33;
+#X connect 2 0 20 0;
+#X connect 2 0 15 0;
+#X connect 2 0 19 0;
+#X connect 2 0 13 0;
+#X connect 2 0 18 0;
+#X connect 2 0 14 0;
+#X connect 2 0 17 0;
+#X connect 2 0 12 0;
+#X connect 2 0 16 0;
+#X connect 2 0 11 0;
+#X connect 11 0 10 0;
+#X connect 12 0 9 0;
+#X connect 13 0 7 0;
+#X connect 14 0 8 0;
+#X connect 15 0 6 0;
+#X connect 16 0 5 0;
+#X connect 17 0 4 0;
+#X connect 18 0 3 0;
+#X connect 19 0 1 0;
+#X connect 20 0 0 0;
+#X restore 1068 143 pd CJazz;
 #X connect 1 0 7 0;
 #X connect 3 0 4 0;
 #X connect 4 0 8 0;
@@ -518,4 +567,13 @@
 #X connect 124 0 80 0;
 #X connect 124 0 0 0;
 #X connect 124 0 0 1;
-#X connect 125 0 102 0;
+#X connect 125 0 126 0;
+#X connect 126 0 127 0;
+#X connect 127 0 128 0;
+#X connect 127 0 129 0;
+#X connect 129 0 101 0;
+#X connect 129 1 88 0;
+#X connect 129 2 99 0;
+#X connect 129 3 103 0;
+#X connect 129 4 130 0;
+#X connect 130 0 131 0;

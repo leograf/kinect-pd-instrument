@@ -28,3 +28,19 @@ void PdComunication::send(std::vector<NoteInformation> noteInformations) {
 		}
 	}
 }
+
+void PdComunication::changeStatus(tools::Chord c) {
+	if (sock.isOk()) {
+
+		oscpkt::Message msg("/status");
+		msg.pushInt32((int)c);
+
+
+		oscpkt::PacketWriter pw;
+		pw.startBundle().addMessage(msg).endBundle();
+
+		if (!sock.sendPacket(pw.packetData(), pw.packetSize())) {
+			std::cout << "Could not sent packet" << std::endl;
+		}
+	}
+}

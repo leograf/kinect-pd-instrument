@@ -8,7 +8,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(width, height), "DT2300");
+	sf::RenderWindow window(sf::VideoMode(width, height), "DT2300", sf::Style::Default);
 	sf::Texture texture;
 	sf::Sprite sprite;
 
@@ -24,21 +24,46 @@ int main()
 
 	DrawingModule drawing;
 	PdComunication pd;
+	tools::Chord status = tools::Chord::CminArp;
+	pd.changeStatus(status);
 
 	sf::Clock clock;
 	clock.restart();
 	float deltaTime = 0.f;
+	bool statusChanged = false;
 
 	while (window.isOpen())
 	{
-
+		statusChanged = false;
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-				window.close();
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Escape)
+					window.close();
+				else if (event.key.code == sf::Keyboard::Num1) {
+					statusChanged = true;
+					status = tools::Chord::CminArp;
+				}
+				else if (event.key.code == sf::Keyboard::Num2) {
+					statusChanged = true;
+					status = tools::Chord::CmajArp;
+				}
+				else if (event.key.code == sf::Keyboard::Num3) {
+					statusChanged = true;
+					status = tools::Chord::Cmaj;
+				}
+				else if (event.key.code == sf::Keyboard::Num4) {
+					statusChanged = true;
+					status = tools::Chord::C3rds;
+				}
+				else if (event.key.code == sf::Keyboard::Num5) {
+					statusChanged = true;
+					status = tools::Chord::CJazz;
+				}
+			}
 		}
 
 		kinect.getKinectData(&depthImage);
@@ -49,6 +74,8 @@ int main()
 		drawing.drawImage(depthInf.getVelocityInformation(), image);
 
 		pd.send(musicModule.getNoteInformations());
+		if (statusChanged)
+			pd.changeStatus(status);
 
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);

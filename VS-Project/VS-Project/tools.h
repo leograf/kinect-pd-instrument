@@ -21,4 +21,13 @@
 const int width = 640;
 const int height = 480;
 
+namespace tools {
+	enum Chord {
+		CminArp,
+		CmajArp,
+		Cmaj,
+		C3rds,
+		CJazz
+	};
+};
 #endif // TOOLS_H

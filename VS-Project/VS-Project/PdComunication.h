@@ -13,6 +13,8 @@ public:
 	PdComunication();
 
 	void send(std::vector<NoteInformation> noteInformations);
+
+	void changeStatus(tools::Chord c);
 private:
 	oscpkt::UdpSocket sock;
 };
