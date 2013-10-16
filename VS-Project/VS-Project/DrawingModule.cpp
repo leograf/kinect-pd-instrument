@@ -27,7 +27,7 @@ void DrawingModule::drawCenters(std::vector<NoteInformation> noteInformations, s
 	for (int i = 0; i < (int)noteInformations.size(); i++) {
 		int x = noteWidth * i + (noteWidth / 2);
 		int y = (int)(((float)noteInformations[i].center + 1.f) / 2.f * (float)height);
-		float scale = noteInformations[i].quantity * noteWidth/2.f + 1;
+		float scale = std::min(2.0f, noteInformations[i].quantity) * noteWidth/2.f + 1;
 		shape.setRadius(scale);
 
 

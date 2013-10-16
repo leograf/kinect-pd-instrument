@@ -10,7 +10,7 @@
 #X text 201 38 2 Amplitude;
 #X text 298 34 3 Modulation;
 #X obj 88 106 saw~;
-#X obj 129 106 phasor~;
+#X obj 33 107 phasor~;
 #X obj 315 413 tabwrite~ array1;
 #N canvas 0 0 450 300 (subpatch) 0;
 #X array array1 400 float 0;
@@ -32,11 +32,12 @@
 #X obj 329 82 expr min(1 \, ($f1 + 1));
 #X obj 265 179 min;
 #X obj -39 136 +~ 1;
-#X obj 23 104 square~;
+#X obj 130 106 square~;
+#X obj 127 81 / 2;
+#X obj 34 80 * 2;
 #X connect 0 0 10 0;
-#X connect 0 0 11 0;
-#X connect 0 0 29 0;
-#X connect 0 0 29 1;
+#X connect 0 0 30 0;
+#X connect 0 0 31 0;
 #X connect 1 0 4 0;
 #X connect 2 0 28 0;
 #X connect 3 0 23 0;
@@ -63,3 +64,6 @@
 #X connect 26 0 27 0;
 #X connect 27 0 16 1;
 #X connect 29 0 17 0;
+#X connect 30 0 29 0;
+#X connect 30 0 29 1;
+#X connect 31 0 11 0;
