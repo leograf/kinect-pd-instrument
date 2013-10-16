@@ -2,7 +2,7 @@
 #define MUSIC_MODLE_H
 
 #define MOVEMENT_MIN_THRESHOLD 30.f
-#define MOVEMENT_MAX_THRESHOLD 100.f
+#define MOVEMENT_MAX_THRESHOLD 200.f
 
 
 #include "tools.h"

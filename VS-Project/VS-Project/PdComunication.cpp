@@ -16,7 +16,6 @@ void PdComunication::send(std::vector<NoteInformation> noteInformations) {
 
 			oscpkt::Message msg(ss.str());
 			msg.pushFloat(noteInformations[n].quantity);
-			printf("quantity: %.10f\n", noteInformations[n].quantity);
 			msg.pushFloat(noteInformations[n].center);
 
 			oscpkt::PacketWriter pw;

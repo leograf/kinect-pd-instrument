@@ -35,9 +35,11 @@ void MusicModule::update(float deltaTime, const std::vector< std::vector<float> 
 		} 
 	
 		// Average the quantity of movement of the note.
-		noteInformations[n].quantity = sumVelocities / (float) (width * noteHeight);
+		float fa = 0.4f;
+		float newQuantity = sumVelocities / (float)(width * noteHeight);
 		// Map the quantity to a value between 0 and ?.
-		noteInformations[n].quantity = std::max(0.f, (noteInformations[n].quantity - MOVEMENT_MIN_THRESHOLD) / MOVEMENT_MAX_THRESHOLD);
+		newQuantity = std::max(0.f, (newQuantity - MOVEMENT_MIN_THRESHOLD) / MOVEMENT_MAX_THRESHOLD);
+		noteInformations[n].quantity = noteInformations[n].quantity*(1.0f - fa) + newQuantity*fa;
 
 		// See http://en.wikipedia.org/wiki/Center_of_mass#A_system_of_particles on how this is calculated.
 		centerOfMass = sumVelocitiesTimesPos / sumVelocities;
