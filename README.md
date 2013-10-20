@@ -14,3 +14,8 @@ To compile we have the .sln project for VS 2013.
 Note that you need to have SFML2.X and KinectSDK and have the enviorment variables ***KINECTSDK10_DIR*** and ***SFML32_DIR*** defined on your path.
 You can always change those parameters on the VS project settings
 
+##### Executing
+You need to have the kinect sdk installed and the kinect plugged in to the computer.
+Execute the file **pd/instrument.pd** in PureData first.
+Execute the VS executable then.
+You can change the chords that will be played using numbers *1 - 5* in the keyboard
