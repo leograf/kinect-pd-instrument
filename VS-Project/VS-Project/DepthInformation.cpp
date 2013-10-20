@@ -12,9 +12,8 @@ DepthInformation::~DepthInformation()
 {
 }
 
-
 void DepthInformation::update(float deltaTime, const std::vector< std::vector<unsigned short> >& depthImage) {
-	float vel, acc, avgVel, avgAcc, depthDiff;
+	float vel, acc, depthDiff;
 	unsigned short depth;
 
 	for (int w = 0; w < width; w++) {
@@ -40,6 +39,9 @@ void DepthInformation::update(float deltaTime, const std::vector< std::vector<un
 			depthBuffer[w][h].acceleration = depthBuffer[w][h].acceleration*(1.f - fa) + acc*fa;
 
 			velocityFrame[w][h] = (depthBuffer[w][h].velocity > 0) ? 0 : depthBuffer[w][h].velocity; // +0.5f*depthBuffer[w][h].acceleration*deltaTime;
+			// Here we could predict the next frame by using the acceleration, since kinect does not have a
+			// great framerate we could always try to predict the next depth velocity using the acceleration.
+			// After some testing we decided not to use it because it augments the noise
 		}
 	}
 }

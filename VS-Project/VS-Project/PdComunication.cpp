@@ -35,7 +35,6 @@ void PdComunication::changeStatus(tools::Chord c) {
 		oscpkt::Message msg("/status");
 		msg.pushInt32((int)c);
 
-
 		oscpkt::PacketWriter pw;
 		pw.startBundle().addMessage(msg).endBundle();
 

@@ -6,35 +6,47 @@
 #include "DrawingModule.h"
 #include "MusicModule.h"
 
+/*
+ * Kinect puredata music instrument by Ferran Bertomeu Castells & Leonard Graf
+ *
+ * Source code avaliable at https://github.com/leograf/kinect-pd-instrument
+ *
+ * Its indended to work with the "instrument.pd" found in the repository
+ */
+
 int main()
 {
+	// SFML init
 	sf::RenderWindow window(sf::VideoMode(width, height), "DT2300", sf::Style::Default);
 	sf::Texture texture;
 	sf::Sprite sprite;
-
+	// Image to render in screen
 	sf::Image image;
 	image.create(width, height, sf::Color::Black);
-
-	KinectManager kinect;
-	DepthInformation depthInf(width, height);
-	MusicModule musicModule(10);
 
 	// Matrix for the DepthInformation.
 	std::vector< std::vector<unsigned short> > depthImage(width, std::vector<unsigned short>(height));
 
+	// Modules and classes init
+	KinectManager kinect;
+	DepthInformation depthInf(width, height);
+	MusicModule musicModule(10);
 	DrawingModule drawing;
 	PdComunication pd;
-	tools::Chord status = tools::Chord::CminArp;
-	pd.changeStatus(status);
+	tools::Chord status; // Chord status of the "instrument.pd"
+	bool statusChanged = false;
+		status = tools::Chord::CminArp;
+		pd.changeStatus(status);
 
 	sf::Clock clock;
 	clock.restart();
 	float deltaTime = 0.f;
-	bool statusChanged = false;
 
+	// Main Loop
 	while (window.isOpen())
 	{
 		statusChanged = false;
+		// Event polling
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -66,17 +78,20 @@ int main()
 			}
 		}
 
-		kinect.getKinectData(&depthImage);
+		// Update modules
 		deltaTime = clock.restart().asSeconds();
+
+		kinect.getKinectData(&depthImage);
 		depthInf.update(deltaTime, depthImage);
 		musicModule.update(deltaTime, depthInf.getVelocityInformation());
-
 		drawing.drawImage(depthInf.getVelocityInformation(), image);
 
+		// Send info to pd
 		pd.send(musicModule.getNoteInformations());
 		if (statusChanged)
 			pd.changeStatus(status);
 
+		// Drawing
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);
 
