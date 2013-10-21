@@ -19,3 +19,5 @@ You need to have the kinect sdk installed and the kinect plugged in to the compu
 Execute the file **pd/instrument.pd** in PureData first.
 Execute the VS executable then.
 You can change the chords that will be played using numbers *1 - 5* in the keyboard
+
+Remember to add the corresponding *dll*s to the folder where you are executing (if you are compiling dynamically), for instance the sfml *dll*s.
