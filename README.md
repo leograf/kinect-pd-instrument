@@ -6,6 +6,8 @@ This project has been developed on Windows over **MS VS 2013** using **SFML 2.0*
 
 It consists of 2 programs, one program in C++ that retrieves Kinect information and a program in **PureData** that handles the information that it is sent to it and generates sound.
 
+Watch the video of the project on vimeo here https://vimeo.com/77405943
+
 ##### Disclaimer
 This software uses a light implementation of OSC (http://opensoundcontrol.org/) developed by Julien Pommier at http://gruntthepeon.free.fr/oscpkt/ for communication between the main program in C++ and PureData
 
